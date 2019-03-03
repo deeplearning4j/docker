@@ -209,3 +209,7 @@ bh_unicode_properties.cache
 # https://packagecontrol.io/packages/sublime-github
 GitHub.sublime-settings
 
+# Exclude nexus-repository-apt artifact from ignored files
+!**/nexus/skymind/nexus-repository-apt/target/
+!**/nexus/skymind/nexus-repository-apt/target/nexus-repository-apt-*.jar
+
