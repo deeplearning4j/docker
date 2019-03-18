@@ -1,6 +1,8 @@
 FROM continuumio/miniconda
 
-RUN groupadd jenkins -g 1000 && useradd -u 1000 -g 1000 -m jenkins
+ENV HOME /home/jenkins
+
+RUN groupadd jenkins -g 1000 && useradd -d ${HOME} -u 1000 -g 1000 -m jenkins
 
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true && \
     apt-get update && \
@@ -38,6 +40,6 @@ ENV PATH=/opt/conda/envs/test-environment/bin:/home/jenkins/.local/bin:$PATH \
 
 RUN echo "source activate test-environment" >> ~/.bashrc
 
-WORKDIR /home/jenkins
+WORKDIR ${HOME}
 
 CMD ["cat"]

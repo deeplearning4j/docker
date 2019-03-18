@@ -87,7 +87,7 @@ RUN yum install -y \
 
 ENV HOME /home/jenkins
 
-RUN groupadd jenkins -g 1000 && useradd -d $HOME -u 1000 -g 1000 -m jenkins
+RUN groupadd jenkins -g 1000 && useradd -d ${HOME} -u 1000 -g 1000 -m jenkins
 
 USER jenkins
 
