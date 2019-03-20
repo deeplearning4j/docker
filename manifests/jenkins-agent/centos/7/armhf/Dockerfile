@@ -50,9 +50,9 @@ RUN mkdir -p /opt/raspberrypi && \
     cd /opt/raspberrypi && \
     git clone git://github.com/raspberrypi/tools.git
 
-FROM BASEIMAGE AS BASE_BUILDER_IMAGE
+FROM base_image AS base_builder_image
 
-COPY --from=BUILD_TOOLS /opt /opt
+COPY --from=build_tools /opt /opt
 
 RUN yum install -y \
         centos-release-scl-rh \
