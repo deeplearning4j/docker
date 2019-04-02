@@ -45,6 +45,15 @@ RUN source /opt/rh/devtoolset-6/enable && \
     cd .. && \
     rm -rf protobuf-3.5.1
 
+# Required for DL4J docs generation
+RUN source /opt/rh/devtoolset-6/enable && \
+    curl -fsSL https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz \
+    | tar xz && \
+    cd Python-2.7.13 && \
+    ./configure --prefix=/opt/python27 && \
+    make -j2 && \
+    make altinstall
+
 FROM base_image AS base_builder_image
 
 COPY --from=build_tools /opt /opt
@@ -71,9 +80,12 @@ RUN yum install -y \
         # Required for libnd4j CPU tests (minifier)
         which \
         # Required for Datavec NativeImageLoader
-        gtk2-devel && \
+        gtk2-devel \
+        # Required for DL4J docs generation
+        python-argparse && \
     yum clean all && rm -rf /var/cache/yum && \
-    ln -s /opt/maven/bin/mvn /usr/bin/mvn
+    ln -s /opt/maven/bin/mvn /usr/bin/mvn && \
+    ln -s /opt/python27/bin/python2.7 /usr/local/bin/python
 
 ENV HOME /home/jenkins
 
