@@ -33,7 +33,7 @@ RUN mkdir -p /opt/sbt && \
     tar -xzC /opt/sbt --strip-components=1
 
 RUN mkdir -p /opt/cmake && \
-    curl -fsSL https://cmake.org/files/v3.9/cmake-3.9.6-Linux-x86_64.tar.gz | \
+    curl -fsSL https://cmake.org/files/v3.14/cmake-3.14.3-Linux-x86_64.tar.gz | \
     tar -xzC /opt/cmake --strip-components=1
 
 RUN source /opt/rh/devtoolset-6/enable && \

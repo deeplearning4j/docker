@@ -14,6 +14,9 @@ RUN yum install -y \
         devtoolset-6-toolchain \
         devtoolset-6-libasan-devel \
         devtoolset-6-liblsan-devel \
+        devtoolset-7-toolchain \
+        devtoolset-7-libasan-devel \
+        devtoolset-7-liblsan-devel \
         tar \
         wget \
         curl \
@@ -38,6 +41,7 @@ USER jenkins
 
 WORKDIR ${HOME}
 
+# Not working...
 RUN echo 'source /opt/rh/devtoolset-6/enable' >> "${HOME}/.bashrc"
 
 ENV PATH=/opt/sbt/bin:/opt/cmake/bin:/opt/protobuf/bin:${PATH} \

@@ -31,14 +31,14 @@ RUN mkdir -p /opt/sbt && \
     curl -fsSL https://dl.bintray.com/sbt/native-packages/sbt/0.13.13/sbt-0.13.13.tgz | \
     tar -xzC /opt/sbt --strip-components=1
 
-RUN curl -fsSL https://cmake.org/files/v3.9/cmake-3.9.6.tar.gz \
+RUN curl -fsSL https://cmake.org/files/v3.14/cmake-3.14.3.tar.gz \
     | tar xz && \
-    cd cmake-3.9.6 && \
+    cd cmake-3.14.3 && \
     ./configure --prefix=/opt/cmake && \
     make -j2 && \
     make install && \
     cd .. && \
-    rm -r cmake-3.9.6
+    rm -r cmake-3.14.3
 
 RUN source /opt/rh/devtoolset-6/enable && \
     curl -fsSL https://github.com/google/protobuf/releases/download/v3.5.1/protobuf-cpp-3.5.1.tar.gz \
