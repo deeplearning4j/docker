@@ -70,7 +70,7 @@ RUN apt-get -qqy update && \
 
 ENV HOME /home/jenkins
 
-RUN groupadd jenkins -g 1000 && useradd -d ${HOME} -u 1000 -g 1000 -m jenkins
+RUN groupadd jenkins -g 1001 && useradd -d ${HOME} -u 1001 -g 1001 -m jenkins
 
 USER jenkins
 
@@ -80,3 +80,4 @@ ENV PATH=/opt/sbt/bin:/opt/cmake/bin:/opt/protobuf/bin:${MAVEN_HOME}/bin:${PATH}
     JAVA_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap ${JAVA_OPTS}"
 
 CMD ["cat"]
+
