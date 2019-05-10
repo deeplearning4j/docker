@@ -14,7 +14,8 @@ RUN yum install -y \
         tar \
         curl \
         openssl \
-        ca-certificates && \
+        ca-certificates \
+        zlib-devel && \
     yum clean all && rm -rf /var/cache/yum
 
 ENV M2_HOME /opt/maven
@@ -45,6 +46,15 @@ RUN source /opt/rh/devtoolset-6/enable && \
     cd .. && \
     rm -rf protobuf-3.5.1
 
+# Required for datavec-python
+RUN source /opt/rh/devtoolset-6/enable && \
+    curl -fsSL https://www.python.org/ftp/python/3.6.8/Python-3.6.8.tgz \
+    | tar xz && \
+    cd Python-3.6.8 && \
+    ./configure --prefix=/opt/python36 && \
+    make -j2 && \
+    make altinstall
+
 FROM base_image AS base_builder_image
 
 COPY --from=build_tools /opt /opt
@@ -73,9 +83,18 @@ RUN yum install -y \
         # Required for libnd4j CPU tests (minifier)
         which \
         # Required for Datavec NativeImageLoader
-        gtk2-devel && \
+        gtk2-devel \
+        # Required for DL4J docs generation
+        python-argparse \
+        # Required for Datavec-python
+        python-pip && \
     yum clean all && rm -rf /var/cache/yum && \
-    ln -s /opt/maven/bin/mvn /usr/bin/mvn
+    ln -s /opt/maven/bin/mvn /usr/bin/mvn && \
+    ln -s /opt/python36/bin/python3.6 /usr/local/bin/python3 && \
+    ln -s /opt/python36/bin/pip3.6 /usr/local/bin/pip3
+
+# Required for Datavec-python
+RUN pip install --no-cache-dir Cython --install-option="--no-cython-compile"
 
 ENV HOME /home/jenkins
 
@@ -88,7 +107,7 @@ WORKDIR ${HOME}
 # Not working...
 RUN echo 'source /opt/rh/devtoolset-7/enable' >> "${HOME}/.bashrc"
 
-ENV PATH=/opt/sbt/bin:/opt/cmake/bin:/opt/protobuf/bin:${PATH} \
+ENV PATH=/opt/sbt/bin:/opt/cmake/bin:/opt/protobuf/bin:/opt/python36/bin:${PATH} \
     JAVA_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap ${JAVA_OPTS}" \
     PROTOBUF_HOME=/opt/protobuf
 
