@@ -43,6 +43,9 @@ RUN yum install -y \
 # Required for Datavec-python
 RUN pip install --no-cache-dir Cython --install-option="--no-cython-compile"
 
+# Part of workaround for missing libcuda.so.1 in during dl4j tests
+RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
+
 ENV HOME /home/jenkins
 
 # FIXME: Temporary change user and group ids to match Jenkins user on agent
@@ -58,6 +61,6 @@ RUN echo 'source /opt/rh/devtoolset-6/enable' >> "${HOME}/.bashrc"
 ENV PATH=/opt/sbt/bin:/opt/cmake/bin:/opt/protobuf/bin:/opt/python36/bin:${PATH} \
     JAVA_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap ${JAVA_OPTS}" \
     PROTOBUF_HOME=/opt/protobuf \
-    LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+    LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
 CMD ["cat"]
