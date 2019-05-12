@@ -1,4 +1,4 @@
-ARG BASEIMAGE_VERSION=10.0-cudnn7-devel-centos7
+ARG BASEIMAGE_VERSION=9.2-cudnn7-devel-centos7
 
 FROM skymindops/jenkins-agent:amd64-centos7 AS build_tools
 

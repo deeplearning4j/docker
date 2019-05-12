@@ -25,8 +25,6 @@ RUN yum install -y \
         git \
         rpm-build \
         java-1.8.0-openjdk-devel \
-        # Required for libnd4j CPU tests
-        sudo \
         # Required for libnd4j CPU tests (minifier)
         which \
         # Required for Datavec NativeImageLoader
