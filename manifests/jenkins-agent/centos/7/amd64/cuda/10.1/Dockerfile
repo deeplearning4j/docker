@@ -59,6 +59,7 @@ RUN echo 'source /opt/rh/devtoolset-6/enable' >> "${HOME}/.bashrc"
 ENV PATH=/opt/sbt/bin:/opt/cmake/bin:/opt/protobuf/bin:/opt/python36/bin:${PATH} \
     JAVA_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap ${JAVA_OPTS}" \
     PROTOBUF_HOME=/opt/protobuf \
-    LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+    LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}\
+    PYTHONHOME=/opt/python36
 
 CMD ["cat"]

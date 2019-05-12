@@ -109,6 +109,7 @@ RUN echo 'source /opt/rh/devtoolset-7/enable' >> "${HOME}/.bashrc"
 
 ENV PATH=/opt/sbt/bin:/opt/cmake/bin:/opt/protobuf/bin:/opt/python36/bin:${PATH} \
     JAVA_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap ${JAVA_OPTS}" \
-    PROTOBUF_HOME=/opt/protobuf
+    PROTOBUF_HOME=/opt/protobuf \
+    PYTHONHOME=/opt/python36
 
 CMD ["cat"]
