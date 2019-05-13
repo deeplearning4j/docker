@@ -39,7 +39,8 @@ RUN yum install -y \
     ln -s /opt/maven/bin/mvn /usr/bin/mvn
 
 # Required for Datavec-python
-RUN pip install --no-cache-dir Cython --install-option="--no-cython-compile"
+RUN pip install --no-cache-dir Cython --install-option="--no-cython-compile" && \
+    pip install --no-cache-dir numpy
 
 # Part of workaround for missing libcuda.so.1 in during dl4j tests
 RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1

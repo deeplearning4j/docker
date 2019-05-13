@@ -85,7 +85,8 @@ RUN yum install -y \
     ln -s /opt/maven/bin/mvn /usr/bin/mvn
 
 # Required for Datavec-python
-RUN pip install --no-cache-dir Cython --install-option="--no-cython-compile"
+RUN pip install --no-cache-dir Cython --install-option="--no-cython-compile" && \
+    pip install --no-cache-dir numpy
 
 ENV HOME /home/jenkins
 
