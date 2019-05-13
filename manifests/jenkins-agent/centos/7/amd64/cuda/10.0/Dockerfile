@@ -32,11 +32,11 @@ RUN yum install -y \
         # Required for DL4J docs generation
         python-argparse \
         # Required for Datavec-python
-        python-pip && \
+        python-pip \
+        python36 \
+        python36-devel && \
     yum clean all && rm -rf /var/cache/yum && \
-    ln -s /opt/maven/bin/mvn /usr/bin/mvn && \
-    ln -s /opt/python36/bin/python3.6 /usr/local/bin/python3 && \
-    ln -s /opt/python36/bin/pip3.6 /usr/local/bin/pip3
+    ln -s /opt/maven/bin/mvn /usr/bin/mvn
 
 # Required for Datavec-python
 RUN pip install --no-cache-dir Cython --install-option="--no-cython-compile"
@@ -56,10 +56,9 @@ WORKDIR ${HOME}
 # Not working...
 RUN echo 'source /opt/rh/devtoolset-6/enable' >> "${HOME}/.bashrc"
 
-ENV PATH=/opt/sbt/bin:/opt/cmake/bin:/opt/protobuf/bin:/opt/python36/bin:${PATH} \
+ENV PATH=/opt/sbt/bin:/opt/cmake/bin:/opt/protobuf/bin:${PATH} \
     JAVA_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap ${JAVA_OPTS}" \
     PROTOBUF_HOME=/opt/protobuf \
-    LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}\
-    PYTHONHOME=/opt/python36
+    LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
 CMD ["cat"]
