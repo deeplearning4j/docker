@@ -28,7 +28,7 @@ docker-java-api:3.0.14
 docker-plugin:1.1.7
 docker-slaves:1.0.7
 docker-workflow:1.18
-durable-task:1.29
+durable-task:1.30
 email-ext:2.66
 embeddable-build-status:2.0.2
 extended-choice-parameter:0.76
