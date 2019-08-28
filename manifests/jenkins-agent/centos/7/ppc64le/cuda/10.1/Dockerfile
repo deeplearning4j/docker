@@ -40,6 +40,8 @@ USER jenkins
 
 WORKDIR ${HOME}
 
+RUN mkdir -p .gnupg
+
 # Not working...
 RUN echo 'source /opt/rh/devtoolset-6/enable' >> "${HOME}/.bashrc"
 

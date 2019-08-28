@@ -34,6 +34,8 @@ USER jenkins
 
 WORKDIR ${HOME}
 
+RUN mkdir -p .gnupg
+
 ENV PATH=/opt/sbt/bin:/opt/cmake/bin:/opt/protobuf/bin:${MAVEN_HOME}/bin:${PATH} \
     JAVA_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap ${JAVA_OPTS}"
 
