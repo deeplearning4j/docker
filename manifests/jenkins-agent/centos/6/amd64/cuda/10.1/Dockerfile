@@ -20,7 +20,8 @@ RUN yum install -y \
         tar \
         wget \
         curl \
-        openssl \
+        openssl-devel \
+        bzip2-devel \
         ca-certificates \
         git \
         rpm-build \
@@ -30,17 +31,19 @@ RUN yum install -y \
         # Required for Datavec NativeImageLoader
         gtk2-devel \
         # Required for DL4J docs generation
-        python-argparse \
-        # Required for Datavec-python
-        python-pip && \
-    yum clean all && rm -rf /var/cache/yum && \
-    ln -s /opt/maven/bin/mvn /usr/bin/mvn && \
+        python-argparse && \
+    yum clean all && rm -rf /var/cache/yum
+
+RUN ln -s /opt/maven/bin/mvn /usr/bin/mvn && \
     ln -s /opt/python27/bin/python2.7 /usr/local/bin/python && \
+    ln -s /opt/python27/bin/python2.7 /usr/local/bin/python2 && \
     ln -s /opt/python36/bin/python3.6 /usr/local/bin/python3 && \
+    ln -s /opt/python27/bin/pip /usr/local/bin/pip && \
     ln -s /opt/python36/bin/pip3.6 /usr/local/bin/pip3
 
 # Required for Datavec-python
-RUN pip install --no-cache-dir Cython --install-option="--no-cython-compile"
+RUN pip install --no-cache-dir Cython --install-option="--no-cython-compile" && \
+    pip3 install --no-cache-dir numpy
 
 # Part of workaround for missing libcuda.so.1 in during dl4j tests
 RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1

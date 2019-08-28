@@ -13,8 +13,9 @@ RUN yum install -y \
         devtoolset-6-liblsan-devel \
         tar \
         curl \
-        openssl \
+        openssl-devel \
         ca-certificates \
+        bzip2-devel \
         zlib-devel && \
     yum clean all && rm -rf /var/cache/yum
 
@@ -55,7 +56,8 @@ RUN source /opt/rh/devtoolset-6/enable && \
     make -j2 && \
     make altinstall
 
-# Required for datavec-python
+# Required for Datavec-python
+RUN curl https://bootstrap.pypa.io/get-pip.py | /opt/python27/bin/python2.7 -
 RUN source /opt/rh/devtoolset-6/enable && \
     curl -fsSL https://www.python.org/ftp/python/3.6.8/Python-3.6.8.tgz \
     | tar xz && \
@@ -82,7 +84,8 @@ RUN yum install -y \
         tar \
         wget \
         curl \
-        openssl \
+        openssl-devel \
+        bzip2-devel \
         ca-certificates \
         git \
         rpm-build \
@@ -92,17 +95,19 @@ RUN yum install -y \
         # Required for Datavec NativeImageLoader
         gtk2-devel \
         # Required for DL4J docs generation
-        python-argparse \
-        # Required for Datavec-python
-        python-pip && \
-    yum clean all && rm -rf /var/cache/yum && \
-    ln -s /opt/maven/bin/mvn /usr/bin/mvn && \
+        python-argparse && \
+    yum clean all && rm -rf /var/cache/yum
+
+RUN ln -s /opt/maven/bin/mvn /usr/bin/mvn && \
     ln -s /opt/python27/bin/python2.7 /usr/local/bin/python && \
+    ln -s /opt/python27/bin/python2.7 /usr/local/bin/python2 && \
     ln -s /opt/python36/bin/python3.6 /usr/local/bin/python3 && \
+    ln -s /opt/python27/bin/pip /usr/local/bin/pip && \
     ln -s /opt/python36/bin/pip3.6 /usr/local/bin/pip3
 
 # Required for Datavec-python
-RUN pip install --no-cache-dir Cython --install-option="--no-cython-compile"
+RUN pip install --no-cache-dir Cython --install-option="--no-cython-compile" && \
+    pip3 install --no-cache-dir numpy
 
 ENV HOME /home/jenkins
 
