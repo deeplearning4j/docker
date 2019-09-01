@@ -26,6 +26,17 @@ RUN apt-get -qqy update && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     update-java-alternatives --set java-1.8.0-openjdk-ppc64el
 
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test && \
+    apt-get -qqy update && \
+    apt-get -y --no-install-recommends install \
+        gcc-7 \
+        g++-7 && \
+    update-alternatives \
+        --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
+        --slave /usr/bin/g++ g++ /usr/bin/g++-7 && \
+    update-alternatives --config gcc && \
+    ls -la /usr/bin/ | grep -oP "[\S]*(gcc|g\+\+)(-[a-z]+)*[\s]" | xargs bash -c 'for link in ${@:1}; do ln -s -f "/usr/bin/${link}-${0}" "/usr/bin/${link}"; done' 7
+
 ENV HOME /home/jenkins
 
 RUN groupadd jenkins -g 1001 && useradd -d ${HOME} -u 1001 -g 1001 -m jenkins
