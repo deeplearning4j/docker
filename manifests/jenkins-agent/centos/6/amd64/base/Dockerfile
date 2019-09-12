@@ -90,6 +90,8 @@ RUN yum install -y \
         git \
         rpm-build \
         java-1.8.0-openjdk-devel \
+        openblas-devel.x86_64 \
+        openblas-static.x86_64 \
         # Required for libnd4j CPU tests (minifier)
         which \
         # Required for Datavec NativeImageLoader
